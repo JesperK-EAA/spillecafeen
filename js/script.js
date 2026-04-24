@@ -1,43 +1,50 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", initApp);
 
-const GAMES_URL =
-  "https://raw.githubusercontent.com/cederdorff/race/refs/heads/master/data/games.json";
+getGames("data.json")
+ 
 let allGames = [];
-const movieList = document.querySelector("#movie-list");
+const gameList = document.querySelector("#game-list");
 const genreSelect = document.querySelector("#genre-select");
 const searchInput = document.querySelector("#search-input");
 const sortSelect = document.querySelector("#sort-select");
-const movieCount = document.querySelector("#movie-count");
+const gameCount = document.querySelector("#game-count");
 
 function initApp() {
-  genreSelect.addEventListener("change", applyFilters);
-  searchInput.addEventListener("input", applyFilters);
-  sortSelect.addEventListener("change", applyFilters);
-
-  fetchMovies();
+ document
+   .querySelector("#search-input")
+   .addEventListener("input", applyFiltersAndSort);
+ document
+   .querySelector("#genre-select")
+   .addEventListener("change", applyFiltersAndSort);
+ document
+   .querySelector("#sort-select")
+   .addEventListener("change", applyFiltersAndSort);
+  getGames();
 }
 
-async function fetchMovies() {
-  const response = await fetch(MOVIES_URL);
-  allMovies = await response.json();
+async function getGames() {
+  const response = await fetch("data.json");
+  allGames = await response.json();
 
   populateGenreSelect();
   applyFilters();
 }
 
 function populateGenreSelect() {
+    const genreSelect = document.querySelector("#genre-select");
   const genres = new Set();
 
-  for (const movie of allMovies) {
-    for (const genre of movie.genre) {
+  for (const game of allGames) {
+    for (const genre of game.genre) {
       genres.add(genre);
     }
   }
 
   const genreArray = Array.from(genres);
 
-  genreArray.sort((movieA, movieB) => movieA.localeCompare(movieB));
+  genreArray.sort((gameA, gameB) => gameA.localeCompare(gameB));
+
   for (const genre of genreArray) {
     genreSelect.insertAdjacentHTML(
       "beforeend",
@@ -47,82 +54,91 @@ function populateGenreSelect() {
 }
 
 function applyFilters() {
-  const searchValue = searchInput.value.trim().toLowerCase();
-  const selectedGenre = genreSelect.value;
-  const sortOption = sortSelect.value;
+  const searchValue = document.querySelector("#search-input").value.trim().toLowerCase();
+  const selectedGenre = document.querySelector("#genre-select").value;
+  const sortOption = document.querySelector("#sort-select").value;
 
-  let filteredMovies = allMovies.filter(function (movie) {
-    const matchesTitle = movie.title.toLowerCase().includes(searchValue);
+  let filteredGames = allGames.filter(function (game) {
+    const matchesTitle = game.title.toLowerCase().includes(searchValue);
     const matchesGenre =
-      selectedGenre === "all" || movie.genre.includes(selectedGenre);
+      selectedGenre === "all" || game.genre.includes(selectedGenre);
     return matchesTitle && matchesGenre;
   });
 
   if (sortOption === "title") {
-    filteredMovies.sort((movieA, movieB) =>
-      movieA.title.localeCompare(movieB.title),
+    filteredGames.sort((gameA, gameB) =>
+      gameA.title.localeCompare(gameB.title),
     );
-  } else if (sortOption === "year") {
-    filteredMovies.sort((movieA, movieB) => movieB.year - movieA.year);
-  } else if (sortOption === "rating") {
-    filteredMovies.sort((movieA, movieB) => movieB.rating - movieA.rating);
+  } else if (sortOption === "playtime") {
+    filteredGames.sort((gameA, gameB) => gameB.playtime - gameA.playtime);
+  } else if (sortOption === "age") {
+    filteredGames.sort((gameA, gameB) => gameB.age - gameA.age);
   }
 
-  showMovies(filteredMovies);
+  showGames(filteredGames);
+}
+function showGames(games) {
+  const gameList = document.querySelector("#game-list");
+  const gameCount = document.querySelector("#game-count");
 }
 
-function showMovies(movies) {
-  movieList.innerHTML = "";
-  movieCount.textContent = `Viser ${movies.length} ud af ${allMovies.length} film`;
+function showGames(games) {
+  gameList.innerHTML = "";
+  gameCount.textContent = `Viser ${games.length} ud af ${allGames.length} spil`;
 
-  if (movies.length === 0) {
-    movieList.innerHTML =
-      '<p class="empty">Ingen film matcher din søgning eller genre.</p>';
+  if (games.length === 0) {
+    gameList.innerHTML =
+      '<p class="empty">Ingen spil matcher din søgning eller genre.</p>';
     return;
   }
 
-  for (const movie of movies) {
-    showMovie(movie);
+  for (const game of games) {
+    showGame(game);
   }
 }
 
-function showMovie(movie) {
-  const movieCard = /*html*/ `
-      <article class="movie-card" tabindex="0">
-        <img src="${movie.image}" alt="${movie.title}" class="movie-image" />
-        <div class="movie-info">
+function showGame(game) {
+  const gameCard = /*html*/ `
+      <article class="game-card" tabindex="0">
+        <img src="${game.image}" alt="Billede af ${game.title}" class="game-poster" />
+        <div class="game-info">
           <div class="title-row">
-            <h2>${movie.title}</h2>
-            <span class="year-badge">(${movie.year})</span>
+            <h2>${game.title}</h2>
+            <span class="year-badge">${game.year}+</span>
           </div>
-          <p class="genre">${movie.genre.join(", ")}</p>
-          <p class="movie-rating">⭐ ${movie.rating}</p>
-          <p class="director-line"><strong>Instruktør:</strong> ${movie.director}</p>
+          <p class="genre">${game.genre}</p>
+          <p class="game-rating">⭐ ${game.rating}</p>
+          <p><strong>Spilletid:</strong> ${game.playtime} min.</p>
+           <p><strong>Spillere:</strong> ${game.players.min}-${game.players.max}</p>
         </div>
       </article>
     `;
 
-  movieList.insertAdjacentHTML("beforeend", movieCard);
+    const gameList = document.querySelector("#game-list");
+  gameList.insertAdjacentHTML("beforeend", gameCard);
 
-  const newCard = movieList.lastElementChild;
+  const newCard = gameList.lastElementChild;
   newCard.addEventListener("click", function () {
-    showMovieDialog(movie);
+    showGameDialog(game);
   });
 }
 
-function showMovieDialog(movie) {
-  const dialog = document.querySelector("#movie-dialog");
+function showGameDialog(game) {
+  const dialog = document.querySelector("#game-dialog");
   const dialogContent = document.querySelector("#dialog-content");
 
   dialogContent.innerHTML = /*html*/ `
-    <img src="${movie.image}" alt="${movie.title}" class="movie-image">
+    <img src="${game.image}" alt="${game.title}" class="game-image">
     <div class="dialog-details">
-      <h2>${movie.title} <span class="movie-year">(${movie.year})</span></h2>
-      <p class="movie-genre">${movie.genre.join(", ")}</p>
-      <p class="movie-rating">⭐ ${movie.rating}</p>
-      <p><strong>Instruktør:</strong> ${movie.director}</p>
-      <p><strong>Skuespillere:</strong> ${movie.actors.join(", ")}</p>
-      <p class="movie-description">${movie.description}</p>
+      <h2>${game.title} <span class="game-year">(${game.year})</span></h2>
+      <p class="game-genre">${game.genre}</p>
+      <p class="game-rating">⭐ ${game.rating}</p>
+      <p><strong>Beskrivelse:</strong> ${game.description}</p>
+      <p><strong>Spilletid:</strong> ${game.playtime} min.</p>
+      <p><strong>Spillere:</strong> ${game.players.min}-${game.players.max}</p>
+      <p><strong>Sprog:</strong> ${game.language}</p>
+       <p><strong>Alder:</strong> ${game.age}+</p>
+      <p class="game-description">${game.description}</p>
     </div>
   `;
 
