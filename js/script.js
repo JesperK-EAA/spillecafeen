@@ -19,8 +19,8 @@ function initApp() {
 }
 
 async function fetchMovies() {
-  const response = await fetch(MOVIES_URL);
-  allMovies = await response.json();
+  const response = await fetch(GAMES_URL);
+  allGames = await response.json();
 
   populateGenreSelect();
   applyFilters();
@@ -29,7 +29,7 @@ async function fetchMovies() {
 function populateGenreSelect() {
   const genres = new Set();
 
-  for (const movie of allMovies) {
+  for (const movie of allGames) {
     for (const genre of movie.genre) {
       genres.add(genre);
     }
@@ -51,7 +51,7 @@ function applyFilters() {
   const selectedGenre = genreSelect.value;
   const sortOption = sortSelect.value;
 
-  let filteredMovies = allMovies.filter(function (movie) {
+  let filteredMovies = allGames.filter(function (movie) {
     const matchesTitle = movie.title.toLowerCase().includes(searchValue);
     const matchesGenre =
       selectedGenre === "all" || movie.genre.includes(selectedGenre);
@@ -73,7 +73,7 @@ function applyFilters() {
 
 function showMovies(movies) {
   movieList.innerHTML = "";
-  movieCount.textContent = `Viser ${movies.length} ud af ${allMovies.length} film`;
+  movieCount.textContent = `Viser ${movies.length} ud af ${allGames.length} film`;
 
   if (movies.length === 0) {
     movieList.innerHTML =
@@ -87,7 +87,7 @@ function showMovies(movies) {
 }
 
 function showMovie(movie) {
-  const movieCard = /*html*/ `
+   const movieCard = /*html*/ `
       <article class="movie-card" tabindex="0">
         <img src="${movie.image}" alt="${movie.title}" class="movie-image" />
         <div class="movie-info">
@@ -107,7 +107,7 @@ function showMovie(movie) {
   const newCard = movieList.lastElementChild;
   newCard.addEventListener("click", function () {
     showMovieDialog(movie);
-  });
+  }); 
 }
 
 function showMovieDialog(movie) {
