@@ -104,12 +104,13 @@ function showGame(game) {
         <div class="game-info">
           <div class="title-row">
             <h2>${game.title}</h2>
-            <span class="year-badge">${game.year}+</span>
+            <span class="year-badge">${game.age}+</span>
           </div>
           <p class="genre">${game.genre}</p>
           <p class="game-rating">⭐ ${game.rating}</p>
           <p><strong>Spilletid:</strong> ${game.playtime} min.</p>
            <p><strong>Spillere:</strong> ${game.players.min}-${game.players.max}</p>
+           <p><strong>Sværhedsgrad:</strong> ${game.difficulty}</p>
         </div>
       </article>
     `;
@@ -138,7 +139,11 @@ function showGameDialog(game) {
       <p><strong>Spillere:</strong> ${game.players.min}-${game.players.max}</p>
       <p><strong>Sprog:</strong> ${game.language}</p>
        <p><strong>Alder:</strong> ${game.age}+</p>
-      <p class="game-description">${game.description}</p>
+       <p><strong>Sværhedsgrad:</strong> ${game.difficulty}</p>
+      <p><strong>Lokation:</strong> ${game.location}</p>
+      <p><strong>Hylde:</strong> ${game.shelf}</p>
+      <p><strong>Status:</strong> ${game.available ? "Tilgængelig" : "Ikke tilgængelig"}</p>
+      <p class="game-description"><strong>Regler:</strong> ${game.rules}</p>
     </div>
   `;
 
