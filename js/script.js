@@ -12,14 +12,12 @@ const gameCount = document.querySelector("#game-count");
 
 function initApp() {
  document
-   .querySelector("#search-input")
-   .addEventListener("input", applyFiltersAndSort);
+   .querySelector("#search-input").addEventListener("input", applyFilters);
  document
-   .querySelector("#genre-select")
-   .addEventListener("change", applyFiltersAndSort);
+   .querySelector("#genre-select").addEventListener("change", applyFilters);
  document
-   .querySelector("#sort-select")
-   .addEventListener("change", applyFiltersAndSort);
+   .querySelector("#sort-select").addEventListener("change", applyFilters);
+
   getGames();
 }
 
@@ -32,18 +30,15 @@ async function getGames() {
 }
 
 function populateGenreSelect() {
-    const genreSelect = document.querySelector("#genre-select");
+  genreSelect.innerHTML = `<option value="all">Alle genrer</option>`;
+
   const genres = new Set();
 
   for (const game of allGames) {
-    for (const genre of game.genre) {
-      genres.add(genre);
-    }
+    genres.add(game.genre);
   }
 
-  const genreArray = Array.from(genres);
-
-  genreArray.sort((gameA, gameB) => gameA.localeCompare(gameB));
+  const genreArray = Array.from(genres).sort((a, b) => a.localeCompare(b));
 
   for (const genre of genreArray) {
     genreSelect.insertAdjacentHTML(
