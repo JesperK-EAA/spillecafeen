@@ -104,6 +104,7 @@ main {
   object-fit: cover;
   display: block;
   transition: transform 200ms ease;
+  padding: 10px;
 }
 
 .game-card:hover .game-poster {
@@ -424,4 +425,12 @@ footer {
   .game-card .game-image {
     height: 300px;
   }
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 0.8rem;
+  display: inline;
+  justify-content: baseline;
 }

@@ -64,10 +64,12 @@ function applyFilters() {
     filteredGames.sort((gameA, gameB) =>
       gameA.title.localeCompare(gameB.title),
     );
-  } else if (sortOption === "playtime") {
-    filteredGames.sort((gameA, gameB) => gameB.playtime - gameA.playtime);
+  } else if (sortOption === "rating") {
+    filteredGames.sort((gameA, gameB) => gameB.rating - gameA.rating);
   } else if (sortOption === "age") {
     filteredGames.sort((gameA, gameB) => gameB.age - gameA.age);
+  } else if (sortOption === "playtime") {
+    filteredGames.sort((gameA, gameB) => gameB.playtime - gameA.playtime);
   }
 
   showGames(filteredGames);
@@ -126,8 +128,8 @@ function showGameDialog(game) {
   dialogContent.innerHTML = /*html*/ `
     <img src="${game.image}" alt="${game.title}" class="game-image">
     <div class="dialog-details">
-      <h2>${game.title} <span class="game-year">(${game.year})</span></h2>
-      <p class="game-genre">${game.genre}</p>
+      <h2>${game.title}</h2>
+      <p class="game-genre"><strong>Genre:</strong> ${game.genre}</p>
       <p class="game-rating">⭐ ${game.rating}</p>
       <p><strong>Beskrivelse:</strong> ${game.description}</p>
       <p><strong>Spilletid:</strong> ${game.playtime} min.</p>
