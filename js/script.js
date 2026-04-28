@@ -1,22 +1,24 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", initApp);
 
-getGames("data.json")
- 
-let allGames = [];
+let allGames = []; // Viser alle spil
 const gameList = document.querySelector("#game-list");
 const genreSelect = document.querySelector("#genre-select");
 const searchInput = document.querySelector("#search-input");
 const sortSelect = document.querySelector("#sort-select");
 const gameCount = document.querySelector("#game-count");
 
+// Filten med at sortere genre og kategorier
 function initApp() {
- document
-   .querySelector("#search-input").addEventListener("input", applyFilters);
- document
-   .querySelector("#genre-select").addEventListener("change", applyFilters);
- document
-   .querySelector("#sort-select").addEventListener("change", applyFilters);
+  document
+    .querySelector("#search-input")
+    .addEventListener("input", applyFilters);
+  document
+    .querySelector("#genre-select")
+    .addEventListener("change", applyFilters);
+  document
+    .querySelector("#sort-select")
+    .addEventListener("change", applyFilters);
 
   getGames();
 }
@@ -48,8 +50,12 @@ function populateGenreSelect() {
   }
 }
 
+// Filter eller sorter det du gerne ville have
 function applyFilters() {
-  const searchValue = document.querySelector("#search-input").value.trim().toLowerCase();
+  const searchValue = document
+    .querySelector("#search-input")
+    .value.trim()
+    .toLowerCase();
   const selectedGenre = document.querySelector("#genre-select").value;
   const sortOption = document.querySelector("#sort-select").value;
 
@@ -74,6 +80,8 @@ function applyFilters() {
 
   showGames(filteredGames);
 }
+
+
 function showGames(games) {
   const gameList = document.querySelector("#game-list");
   const gameCount = document.querySelector("#game-count");
@@ -94,6 +102,7 @@ function showGames(games) {
   }
 }
 
+// Card component
 function showGame(game) {
   const gameCard = /*html*/ `
       <article class="game-card" tabindex="0">
@@ -104,7 +113,7 @@ function showGame(game) {
             <span class="year-badge">${game.age}+</span>
           </div>
           <p class="genre">${game.genre}</p>
-          <p class="game-rating"><img src="imge/Star-2.svg" alt="rating stjene"> ${game.rating}</p>
+          <p class="game-rating"><img src="imge/Star-2.svg" class="star" alt="rating stjene"> ${game.rating}</p>
           <p><strong>Spilletid:</strong> ${game.playtime} min.</p>
            <p><strong>Spillere:</strong> ${game.players.min}-${game.players.max}</p>
            <p><strong>Sværhedsgrad:</strong> ${game.difficulty}</p>
@@ -112,7 +121,7 @@ function showGame(game) {
       </article>
     `;
 
-    const gameList = document.querySelector("#game-list");
+  const gameList = document.querySelector("#game-list");
   gameList.insertAdjacentHTML("beforeend", gameCard);
 
   const newCard = gameList.lastElementChild;
@@ -120,7 +129,7 @@ function showGame(game) {
     showGameDialog(game);
   });
 }
-
+// Viser card component
 function showGameDialog(game) {
   const dialog = document.querySelector("#game-dialog");
   const dialogContent = document.querySelector("#dialog-content");
@@ -130,7 +139,7 @@ function showGameDialog(game) {
     <div class="dialog-details">
       <h2>${game.title}</h2>
       <p class="game-genre"><strong>Genre:</strong> ${game.genre}</p>
-      <p class="game-rating"><img src="imge/Star-2.svg" alt="rating stjene"> ${game.rating}</p>
+      <p class="game-rating"><img src="imge/Star-2.svg" class="star" alt="rating stjene"> ${game.rating}</p>
       <p><strong>Beskrivelse:</strong> ${game.description}</p>
       <p><strong>Spilletid:</strong> ${game.playtime} min.</p>
       <p><strong>Spillere:</strong> ${game.players.min}-${game.players.max}</p>

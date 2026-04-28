@@ -6,23 +6,23 @@
 
 :root {
   /* Dark cinematic palette */
-  --bg-dark: #0c111a;
+  --bg-dark: #000000;
   --text-light: black;
   --text-muted: black;
-  --card-bg:#3B0B0A;
-  --accent: #d641f4;
+  --card-bg: #3b0b0a;
+  --accent: #b3231e;
 }
 
 body {
   font-family: "Segoe UI", system-ui, sans-serif;
-  background: #F9F3EC;
+  background: #fcf4f3;
   color: var(--text-light);
   min-height: 100vh;
 }
 
 header {
-  background-color: #F8DFDB;
-  border-bottom: 7px solid #B3231E;
+  background-color: #f8dfdb;
+  border-bottom: 7px solid #b3231e;
   text-align: center;
   padding: 1.5rem 1rem;
   position: relative;
@@ -74,12 +74,12 @@ main {
 }
 
 .game-card {
-  background: #F8DFDB;
-  border: 3px solid #B3231E;
+  background: #f8dfdb;
+  border: 2px solid #b3231e;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px rgba(251, 0, 0, 0.194);
   transition:
     transform 200ms ease,
     box-shadow 200ms ease,
@@ -88,12 +88,12 @@ main {
 
 .game-card:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
-  border-color: #CC6C69;
+  box-shadow: 0 20px 40px rgba(251, 0, 0, 0.194);
+  border-color: #59110f;
 }
 
 .game-card:focus-visible {
-  outline: 2px solid #3B0B0A;
+  outline: 2px solid #3b0b0a;
   outline-offset: 2px;
 }
 
@@ -129,8 +129,8 @@ main {
 
 /* ===== DAG 3-4: Filters & Controls ===== */
 .controls {
-  background-color: #F8DFDB;
-  border: 3px solid #B3231E;
+  background-color: #f8dfdb;
+  border: 3px solid #b3231e;
   border-radius: 12px;
   backdrop-filter: blur(4px);
   padding: 1rem;
@@ -155,9 +155,9 @@ main {
 .control-group input,
 .control-group select {
   width: 100%;
-  background: #B3231E;
+  background: #b3231e;
   border: 1px solid #59110f;
-  color: var(--text-light);
+  color: white;
   border-radius: 8px;
   padding: 0.7rem 0.8rem;
   font-size: 0.95rem;
@@ -182,8 +182,8 @@ main {
 
 .year-badge {
   border-radius: 999px;
-  background: rgb(235, 91, 204);
-  color: #92dafd;
+  background: #b3231e;
+  color: #ffffff;
   font-size: 0.68rem;
   font-weight: 700;
   padding: 0.35rem 0.42rem;
@@ -229,14 +229,9 @@ dialog#game-dialog {
   width: min(94vw, 980px);
   max-height: 90vh;
   padding: 0;
-  border: 1px solid rgb(179, 2, 255);
+  border: 2px solid #b3231e;
   border-radius: 14px;
-  background: linear-gradient(
-    180deg,
-    #3B0B0A 0%,
-    rgba(150, 241, 4, 0.98) 100%
-  );
-  color: blue;
+  background: #fbefed;
   box-shadow: 0 28px 60px rgba(251, 0, 0, 0.194);
   overflow: hidden;
   position: fixed;
@@ -265,8 +260,8 @@ dialog#game-dialog form {
   width: 2.35rem;
   height: 2.35rem;
   border-radius: 999px;
-  border: 1px solid #3B0B0A;
-  background: rgb(1, 90, 254);
+  border: 2px solid #b3231e;
+  background: #fbefed;
   color: black;
   font-size: 1.1rem;
   cursor: pointer;
@@ -281,7 +276,7 @@ dialog#game-dialog form {
 
 #close-dialog:hover,
 #close-dialog:focus-visible {
-  background: brown;
+  background: #f8dfdb;
   color: var(--bg-dark);
   transform: scale(1.06);
 }
@@ -300,8 +295,8 @@ dialog#game-dialog form {
   width: 100%;
   height: auto;
   border-radius: 10px;
-  border: 1px solid rgba(243, 4, 191, 0.99);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  border: 2px solid #b3231e;
+  box-shadow: 0 16px 35px rgba(251, 0, 0, 0.194);
 }
 
 .dialog-details {
@@ -323,8 +318,8 @@ dialog#game-dialog form {
   margin-left: 0.45rem;
   padding: 0.2rem 0.55rem;
   border-radius: 999px;
-  background: #3B0B0A;
-  color: #ff00c8;
+  background: #3b0b0a;
+  color: black;
   font-size: 0.85rem;
   font-weight: 700;
 }
@@ -347,9 +342,9 @@ dialog#game-dialog form {
 .game-description {
   margin-top: 0.45rem !important;
   padding: 0.9rem;
-  background: rgb(7, 234, 49);
-  border: 1px solid rgb(255, 191, 0);
-  border-left: 4px solid var(--accent);
+  background: #fbefed;
+  border: 1px solid #b3231e;
+  border-left: 3px solid var(--accent);
   border-radius: 10px;
   color: black !important;
 }
@@ -386,17 +381,17 @@ dialog#game-dialog form {
 .empty,
 .loading {
   text-align: center;
-  color: black;
-  border: 3px solid #B3231E;
+  color: white;
+  border: 2px solid #3b0b0a;
   border-radius: 10px;
   padding: 1rem;
-  background: rgba(20, 28, 39, 0.4);
+  background: #b3231e;
   grid-column: 1 / -1;
 }
 
 footer {
   text-align: center;
-  color: palevioletred;
+  color: #240201;
   font-size: 0.85rem;
   padding: 1rem 0 1.5rem;
 }
@@ -431,8 +426,8 @@ footer {
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
-  width: 158px;
-  height: 119px;
+  width: 149px;
+  height: 100px;
   object-fit: contain;
 }
 
@@ -442,4 +437,12 @@ footer {
 
 .subtitle {
   margin-top: 0.4rem;
+}
+
+.star {
+  width: 16px;
+}
+
+#search-input::placeholder {
+  color: #ffffffcd;
 }
